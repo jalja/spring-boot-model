@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.jalja.db.config.DataSourceConfig,\
+com.jalja.db.config.MyBatisConfig

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jalja.org.boot.mapper.TAssetCarModelMapper">
+  <resultMap id="BaseResultMap" type="com.jalja.org.boot.model.TAssetCarModel">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="series_id" jdbcType="BIGINT" property="seriesId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="short_name" jdbcType="VARCHAR" property="shortName" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="year" jdbcType="VARCHAR" property="year" />
+    <result column="min_reg_year" jdbcType="VARCHAR" property="minRegYear" />
+    <result column="max_reg_year" jdbcType="VARCHAR" property="maxRegYear" />
+    <result column="liter" jdbcType="VARCHAR" property="liter" />
+    <result column="gear_type" jdbcType="VARCHAR" property="gearType" />
+    <result column="discharge_standard" jdbcType="VARCHAR" property="dischargeStandard" />
+    <result column="seat_number" jdbcType="VARCHAR" property="seatNumber" />
+    <result column="is_allow_loan" jdbcType="SMALLINT" property="isAllowLoan" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jalja.org.boot.model.TAssetCarModel">
+    <result column="high_light" jdbcType="LONGVARCHAR" property="highLight" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, series_id, name, short_name, price, year, min_reg_year, max_reg_year, liter, 
+    gear_type, discharge_standard, seat_number, is_allow_loan, update_time, is_del
+  </sql>
+  <sql id="Blob_Column_List">
+    high_light
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.jalja.org.boot.model.TAssetCarModelExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_asset_car_model
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.jalja.org.boot.model.TAssetCarModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_asset_car_model
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_asset_car_model
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_asset_car_model
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jalja.org.boot.model.TAssetCarModelExample">
+    delete from t_asset_car_model
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jalja.org.boot.model.TAssetCarModel">
+    insert into t_asset_car_model (id, series_id, name, 
+      short_name, price, year, 
+      min_reg_year, max_reg_year, liter, 
+      gear_type, discharge_standard, seat_number, 
+      is_allow_loan, update_time, is_del, 
+      high_light)
+    values (#{id,jdbcType=BIGINT}, #{seriesId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{shortName,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{year,jdbcType=VARCHAR}, 
+      #{minRegYear,jdbcType=VARCHAR}, #{maxRegYear,jdbcType=VARCHAR}, #{liter,jdbcType=VARCHAR}, 
+      #{gearType,jdbcType=VARCHAR}, #{dischargeStandard,jdbcType=VARCHAR}, #{seatNumber,jdbcType=VARCHAR}, 
+      #{isAllowLoan,jdbcType=SMALLINT}, #{updateTime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=INTEGER}, 
+      #{highLight,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jalja.org.boot.model.TAssetCarModel">
+    insert into t_asset_car_model
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="seriesId != null">
+        series_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="shortName != null">
+        short_name,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="minRegYear != null">
+        min_reg_year,
+      </if>
+      <if test="maxRegYear != null">
+        max_reg_year,
+      </if>
+      <if test="liter != null">
+        liter,
+      </if>
+      <if test="gearType != null">
+        gear_type,
+      </if>
+      <if test="dischargeStandard != null">
+        discharge_standard,
+      </if>
+      <if test="seatNumber != null">
+        seat_number,
+      </if>
+      <if test="isAllowLoan != null">
+        is_allow_loan,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+      <if test="highLight != null">
+        high_light,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="seriesId != null">
+        #{seriesId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null">
+        #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="minRegYear != null">
+        #{minRegYear,jdbcType=VARCHAR},
+      </if>
+      <if test="maxRegYear != null">
+        #{maxRegYear,jdbcType=VARCHAR},
+      </if>
+      <if test="liter != null">
+        #{liter,jdbcType=VARCHAR},
+      </if>
+      <if test="gearType != null">
+        #{gearType,jdbcType=VARCHAR},
+      </if>
+      <if test="dischargeStandard != null">
+        #{dischargeStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="seatNumber != null">
+        #{seatNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="isAllowLoan != null">
+        #{isAllowLoan,jdbcType=SMALLINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="highLight != null">
+        #{highLight,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jalja.org.boot.model.TAssetCarModelExample" resultType="java.lang.Long">
+    select count(*) from t_asset_car_model
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_asset_car_model
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.seriesId != null">
+        series_id = #{record.seriesId,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shortName != null">
+        short_name = #{record.shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.year != null">
+        year = #{record.year,jdbcType=VARCHAR},
+      </if>
+      <if test="record.minRegYear != null">
+        min_reg_year = #{record.minRegYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxRegYear != null">
+        max_reg_year = #{record.maxRegYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.liter != null">
+        liter = #{record.liter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gearType != null">
+        gear_type = #{record.gearType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dischargeStandard != null">
+        discharge_standard = #{record.dischargeStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seatNumber != null">
+        seat_number = #{record.seatNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isAllowLoan != null">
+        is_allow_loan = #{record.isAllowLoan,jdbcType=SMALLINT},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDel != null">
+        is_del = #{record.isDel,jdbcType=INTEGER},
+      </if>
+      <if test="record.highLight != null">
+        high_light = #{record.highLight,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_asset_car_model
+    set id = #{record.id,jdbcType=BIGINT},
+      series_id = #{record.seriesId,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      short_name = #{record.shortName,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DOUBLE},
+      year = #{record.year,jdbcType=VARCHAR},
+      min_reg_year = #{record.minRegYear,jdbcType=VARCHAR},
+      max_reg_year = #{record.maxRegYear,jdbcType=VARCHAR},
+      liter = #{record.liter,jdbcType=VARCHAR},
+      gear_type = #{record.gearType,jdbcType=VARCHAR},
+      discharge_standard = #{record.dischargeStandard,jdbcType=VARCHAR},
+      seat_number = #{record.seatNumber,jdbcType=VARCHAR},
+      is_allow_loan = #{record.isAllowLoan,jdbcType=SMALLINT},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_del = #{record.isDel,jdbcType=INTEGER},
+      high_light = #{record.highLight,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_asset_car_model
+    set id = #{record.id,jdbcType=BIGINT},
+      series_id = #{record.seriesId,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      short_name = #{record.shortName,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DOUBLE},
+      year = #{record.year,jdbcType=VARCHAR},
+      min_reg_year = #{record.minRegYear,jdbcType=VARCHAR},
+      max_reg_year = #{record.maxRegYear,jdbcType=VARCHAR},
+      liter = #{record.liter,jdbcType=VARCHAR},
+      gear_type = #{record.gearType,jdbcType=VARCHAR},
+      discharge_standard = #{record.dischargeStandard,jdbcType=VARCHAR},
+      seat_number = #{record.seatNumber,jdbcType=VARCHAR},
+      is_allow_loan = #{record.isAllowLoan,jdbcType=SMALLINT},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_del = #{record.isDel,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jalja.org.boot.model.TAssetCarModel">
+    update t_asset_car_model
+    <set>
+      <if test="seriesId != null">
+        series_id = #{seriesId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null">
+        short_name = #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="minRegYear != null">
+        min_reg_year = #{minRegYear,jdbcType=VARCHAR},
+      </if>
+      <if test="maxRegYear != null">
+        max_reg_year = #{maxRegYear,jdbcType=VARCHAR},
+      </if>
+      <if test="liter != null">
+        liter = #{liter,jdbcType=VARCHAR},
+      </if>
+      <if test="gearType != null">
+        gear_type = #{gearType,jdbcType=VARCHAR},
+      </if>
+      <if test="dischargeStandard != null">
+        discharge_standard = #{dischargeStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="seatNumber != null">
+        seat_number = #{seatNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="isAllowLoan != null">
+        is_allow_loan = #{isAllowLoan,jdbcType=SMALLINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="highLight != null">
+        high_light = #{highLight,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jalja.org.boot.model.TAssetCarModel">
+    update t_asset_car_model
+    set series_id = #{seriesId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      short_name = #{shortName,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      year = #{year,jdbcType=VARCHAR},
+      min_reg_year = #{minRegYear,jdbcType=VARCHAR},
+      max_reg_year = #{maxRegYear,jdbcType=VARCHAR},
+      liter = #{liter,jdbcType=VARCHAR},
+      gear_type = #{gearType,jdbcType=VARCHAR},
+      discharge_standard = #{dischargeStandard,jdbcType=VARCHAR},
+      seat_number = #{seatNumber,jdbcType=VARCHAR},
+      is_allow_loan = #{isAllowLoan,jdbcType=SMALLINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=INTEGER},
+      high_light = #{highLight,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jalja.org.boot.model.TAssetCarModel">
+    update t_asset_car_model
+    set series_id = #{seriesId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      short_name = #{shortName,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      year = #{year,jdbcType=VARCHAR},
+      min_reg_year = #{minRegYear,jdbcType=VARCHAR},
+      max_reg_year = #{maxRegYear,jdbcType=VARCHAR},
+      liter = #{liter,jdbcType=VARCHAR},
+      gear_type = #{gearType,jdbcType=VARCHAR},
+      discharge_standard = #{dischargeStandard,jdbcType=VARCHAR},
+      seat_number = #{seatNumber,jdbcType=VARCHAR},
+      is_allow_loan = #{isAllowLoan,jdbcType=SMALLINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

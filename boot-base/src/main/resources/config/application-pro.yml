@@ -1,0 +1,1 @@
+spring.datasource.url=jdbc:mysql://10.99.39.211:3306/my_db_pro

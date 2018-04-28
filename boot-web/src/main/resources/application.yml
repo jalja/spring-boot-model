@@ -1,0 +1,38 @@
+server:
+  port: 8181
+  contextPath: /boot
+db:
+ mysql:
+  url: 127.0.0.1
+  username: root
+  password: root
+  driverClass: java.com 
+  
+  
+
+logging:
+ level:
+  root: info
+management:  
+  endpoints:  
+    web:  
+      expose: "*" 
+    
+
+endpoints:
+ sensitive: true
+ shutdown:
+  enabled: true
+
+#保护端点
+security:
+ basic:
+  enabled: true
+  path: /manage
+ user: 
+  name: roncoo
+  password: roncoo
+ roles: SUPERUSER
+
+management:
+ context-path: /manage    

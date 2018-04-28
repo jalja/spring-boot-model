@@ -1,0 +1,12 @@
+事件流程
+1、自定义事件，需要继承ApplicationEvent抽象类
+2、定义事件监听器，一般实现ApplicationListenter接口；
+3、注册监听器  app.addListeners(new MyApplicationListener()); 
+     使用@Component将监听器加入spring容器也可以;
+     使用配置context.listener.classes=监听器全名也可以；实现原理 DelegatingApplicationListener。
+    使用@EventListener注解也可以；实现原理 EventListenerMethodProcessor.processBean()
+4、发布事件 context.publishEvent(new MyApplicationEvent(new Object()));
+
+
+spring 中提供的事件 ：org.springframework.context.event
+spring boot 提供的事件：org.springframework.boot.context.event

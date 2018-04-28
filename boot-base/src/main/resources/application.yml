@@ -1,0 +1,10 @@
+
+
+local:
+ ip: 10.99.39.137
+ port: 3456
+ url: ${local.ip}:${local.port}
+ defIP: 
+
+
+ 

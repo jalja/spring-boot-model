@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.jalja.org</groupId>
+  <artifactId>boot-web</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+   <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+    </properties>
+    <parent>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-parent</artifactId>
+	    <version>2.0.1.RELEASE</version>
+	</parent>
+	<dependencies>
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-web</artifactId>
+	        <!-- boot 默认 使用 tomcat 使用jetty 时需要排除 -->
+	        <!-- <exclusions>
+	        	<exclusion>
+	        	 	<groupId>org.springframework.boot</groupId>
+	        		<artifactId>spring-boot-starter-tomcat</artifactId>
+	        	</exclusion>
+	        </exclusions> -->
+	    </dependency>
+	    
+	    
+	    <!-- 使用jetty容器 -->
+	   <!--  <dependency>
+	     	<groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-jetty</artifactId>
+	    </dependency> -->
+	    
+	    
+	    <!--  Freemarker  模板 -->
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-freemarker</artifactId>
+	    </dependency>
+	    
+	    <!-- spring boot 支持jsp -->
+		<!-- <dependency>
+		    <groupId>org.apache.tomcat.embed</groupId>
+		    <artifactId>tomcat-embed-jasper</artifactId>
+		</dependency> -->
+	         <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>druid</artifactId>
+		    <version>1.1.9</version>
+		</dependency>
+		
+	 <dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-aop</artifactId>
+	</dependency>
+	<!-- spring boot 环境监控-->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+	
+    <!-- 引入自定义start -->
+    <dependency>
+      <groupId>com.jalja.org</groupId>
+	  <artifactId>boot-start-utils</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+    </dependency>		
+	</dependencies>
+</project>

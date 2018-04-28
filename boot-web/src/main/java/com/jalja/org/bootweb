@@ -1,0 +1,94 @@
+一、静态资源的配置
+静态资源 在 	
+"classpath:/META-INF/resources/", 
+"classpath:/resources/",
+"classpath:/static/", 
+"classpath:/public/"   这些目录下 可以直接访问 
+也可以通过 spring.resources.staticLocations=xxx 修改访问目录
+
+二、boot 中使用 servlet
+
+三、拦截器
+1、实现 HandlerInterceptor 接口 
+2、将拦截器加入spring容器  实现WebMvcConfigurer 重写 addInterceptors(InterceptorRegistry registry)方法
+
+四、spring boot 异常处理 
+1、默认异常 类ErrorMvcAutoConfiguration 排除 @SpringBootApplication(exclude=ErrorMvcAutoConfiguration.class)
+2、自定义异常处理  实现 ErrorPageRegistrar 接口 重写 registerErrorPages()方法
+3、使用 注解  @ExceptionHandler(Exception.class) 处理当前异常
+4、@ControllerAdvice +  @ExceptionHandler(Exception.class) 全局异常处理
+
+
+五、spring boot tomcat的优化
+#是否启用日志 
+#server.tomcat.accesslog.enabled=true;
+#日志路径
+#server.tomcat.accesslog.directory=d:/logs
+ 实现 spring boot 2.0  WebServerFactoryCustomizer 接口  本文 使用  spring boot2 版本
+ 实现 spring boot 1版本   EmbeddedServletContainerCustomizer 接口
+ 
+ 六、spring boot 数据源 
+     1、org.springframework.boot.autoconfigure.jdbc.DataSourceProperties  默认使用的是Tomcat.class（tomcat-jdbc）数据源
+                     默认支持5种数据源：   DataSourceConfiguration.Hikari.class 
+                     DataSourceConfiguration.Tomcat.class
+                     DataSourceConfiguration.Dbcp2.class
+                     DataSourceConfiguration.Generic.class
+                     DataSourceJmxConfiguration.class
+                    引入jar  通过设置 spring.datasource.type=数据源                方式 来修改我们想用的数据源。
+     
+     2、自定义数据源 
+                     例如 我们使用           Druid   
+                    第一步:引入依赖              
+       <dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>druid</artifactId>
+		    <version>1.1.9</version>
+		</dependency>
+		第二步： 参考 com.jalja.org.jdbc.DBdataSource
+		
+		
+七、spring boot AOP
+   <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop -->
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-aop</artifactId>
+	    <version>2.0.1.RELEASE</version>
+	</dependency>
+	aop 配置 类 org.springframework.boot.autoconfigure.aop.AopAutoConfiguration    		
+	开启aop:方法1.在配置文件设置：spring.aop.auto=false 可以关闭 aop  该值 默认 true。
+	                    方法2：@EnableAspectJAutoProxy 在启动类上
+
+	spring boot aop 实现方式有 两种 
+	1、 JdkDynamicAutoProxyConfiguration（默认使用 前提 是 面向接口编程 否则转为Cglib模式） 
+	2、CglibAutoProxyConfiguration
+	      通过设置 spring.aop.proxy-target-class=false 可以启用 jdk动态代理（需要接口编程）
+	  spring.aop.proxy-target-class=true 是   Cglib 模式 
+
+八、自定义start
+
+九、boot 日志  		   
+         默认使用logback
+        可以在配置文件中设置日志信息
+   logging.level.root=debug        
+十、监控健康
+
+	<!-- spring boot 环境监控-->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		
+	 通过实现 HealthIndicator 接口可以自定义健康检查			 
+	请求监控：countterService   guageService
+	ExportConfiguration  将监控信息输出到指定位置
+		 
+十一、spring 测试
+
+    <!-- 自测工具 -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+    </dependency>
+ 
+ 
+ 

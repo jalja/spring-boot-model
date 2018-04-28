@@ -1,0 +1,12 @@
+扩展 一
+ApplicationContextInitializer 接口在spring容器执行refreshed之前回调
+ApplicationContextInitializer 的使用 步骤：
+1、实现该接口
+2、注册到application中 
+   注册方式1.app.addInitializers(new MyApplicationContextInitializer());
+   注册方式2.配置文件 配置 context.initializer.classes=com.jalja.org.boot.extend.MyApplicationContextInitializer
+   注册方式3.在 META-INF/spring.factories 配置springframework.context.ApplicationContextInitializer=
+
+扩展二
+CommandLineRunner（ApplicationRunner新方式   该接口同等效果）  spring容器启动成功最后一步回调.
+当有多个时 ，可以通过 @Order 注解控制执行顺序 值越大优先级越小   
