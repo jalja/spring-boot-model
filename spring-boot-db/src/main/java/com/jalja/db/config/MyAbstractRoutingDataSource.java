@@ -3,6 +3,7 @@ package com.jalja.db.config;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+import org.springframework.util.StringUtils;
 
 
 
@@ -17,7 +18,7 @@ public class MyAbstractRoutingDataSource extends AbstractRoutingDataSource {
     @Override  
     protected Object determineCurrentLookupKey() {  
         String typeKey = DataSourceContextHolder.getJdbcType();  
-        if (typeKey==null || typeKey.equals(DataSourceType.write.getType())) {
+        if (StringUtils.isEmpty(typeKey) || typeKey.equals(DataSourceType.write.getType())) {
         	 return DataSourceType.write.getType();  
         }  
         // 读 简单负载均衡  

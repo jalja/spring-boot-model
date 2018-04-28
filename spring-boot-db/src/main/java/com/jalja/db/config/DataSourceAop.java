@@ -26,7 +26,7 @@ public class DataSourceAop {
 			 return;
 		}
         String methodName = joinPoint.getSignature().getName();
-        if(methodName.indexOf("insert")!=-1) {
+        if(methodName.indexOf("insert")!=-1 || methodName.indexOf("update")!=-1) {
         	logger.info("dataSource切换到：write"); 
         	DataSourceContextHolder.write();  
         }else {

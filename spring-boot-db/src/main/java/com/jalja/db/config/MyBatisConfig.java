@@ -65,11 +65,8 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
     public AbstractRoutingDataSource roundRobinDataSouceProxy() {  
         int size = mapperProperties.getReadNum();  
         MyAbstractRoutingDataSource proxy = new MyAbstractRoutingDataSource(size);  
-        Map<Object, Object> targetDataSources = new HashMap<Object, Object>();  
-        //DataSource writeDataSource = SpringContextHolder.getBean("writeDataSource");  
-        // 写  
+        Map<Object, Object> targetDataSources = new HashMap<Object, Object>();   
         targetDataSources.put(DataSourceType.write.getType(),dataSourceWriter);  
-        // targetDataSources.put(DataSourceType.read.getType(),readDataSource);  
         //多个读数据库时  
         targetDataSources.put(DataSourceType.read.getIndex(),dataSourceRead);
         proxy.setDefaultTargetDataSource(dataSourceWriter);  
