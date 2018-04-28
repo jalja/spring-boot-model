@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes=TestConfig.class)
 public class TestUserServiceTest {
 	@Autowired
-	private TestUserService testUserService;
+	private UserService userService;
 	
 	@Autowired
 	private Runnable runnable;
@@ -26,6 +26,6 @@ public class TestUserServiceTest {
 	@Test
 	public void testGetUsetList() {
 		System.out.println(runnable);
-		System.out.println(testUserService.getUsetList("lz"));
+		System.out.println(userService.getUsetList("lz"));
 	}
 }

@@ -37,7 +37,7 @@ public class ServerClient {
 		Collection<ServiceInstance<Object>> list=discovery.queryForInstances(serverName);
 		final List<String> servers=new ArrayList<>();
 		list.forEach((in)->{
-			servers.add(in.getAddress()+":"+in.getPort());
+			servers.add("http://"+in.getAddress()+":"+in.getPort());
 		});
 		ServerRoute.addMap(serverName, servers);
 		return ServerRoute.getServer(serverName);

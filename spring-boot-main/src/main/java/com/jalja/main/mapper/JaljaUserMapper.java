@@ -21,4 +21,6 @@ public interface JaljaUserMapper {
     int updateByExampleSelective(@Param("record") JaljaUser record, @Param("example") JaljaUserExample example);
 
     int updateByExample(@Param("record") JaljaUser record, @Param("example") JaljaUserExample example);
+    
+    
 }
