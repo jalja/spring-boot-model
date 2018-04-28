@@ -20,7 +20,7 @@ public class OrderController {
 	
 	@GetMapping(value="getOrderById")
 	public String getOrderById(Integer orderId) throws Exception {
-		String url="http://"+serverClient.getServer("/springMain")+"/user/getUserName";
+		String url=serverClient.getServer("/springMain")+"/user/getUserName";
 		System.out.println(url);
 		String str=restTemplate.getForObject(url, String.class);
 		return str;
