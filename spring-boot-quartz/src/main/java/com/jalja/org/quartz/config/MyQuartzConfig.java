@@ -1,43 +1,60 @@
 package com.jalja.org.quartz.config;
 
-import java.util.Date;
 
-import org.quartz.CronScheduleBuilder;
-import org.quartz.JobBuilder;
-import org.quartz.JobDetail;
-import org.quartz.Scheduler;
-import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
-import org.quartz.impl.StdSchedulerFactory;
+
+
+
+import org.quartz.CronTrigger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
+import org.springframework.scheduling.quartz.JobDetailFactoryBean;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
+import com.alibaba.druid.pool.DruidDataSource;
+import com.jalja.org.quartz.job.AdaptableJobFactory;
 import com.jalja.org.quartz.job.MyJob;
 
+
+
 @Configuration
-@ComponentScan(basePackages= {"com.jalja.org.quartz.*"})
 public class MyQuartzConfig {
-	@Autowired
-	private MyJob myJob;
-	
-	
+    @Autowired
+	private AdaptableJobFactory adaptableJobFactory;
+    
+    @Autowired
+    private DruidDataSource druidDataSource;
+    
 	@Bean
-    public JobDetail uploadTaskDetail() {
-        return JobBuilder.newJob(myJob.getClass()).withIdentity("MyJob","MyGroup").build();
-    }
-	@Bean
-    public Trigger uploadTaskTrigger() {
-        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("*/5 * * * * ?");
-        return TriggerBuilder.newTrigger().withIdentity("My-tr","MyGroup").withSchedule(scheduleBuilder).build();
-    }
-	@Bean
-	public Scheduler getScheduler2() throws Exception {
-		 Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler(); 
-		 scheduler.start();
-		 Date data=scheduler.scheduleJob(uploadTaskDetail(),uploadTaskTrigger());
-		 return scheduler;
+	public JobDetailFactoryBean getJobDetailFactoryBean() {
+		JobDetailFactoryBean jobDetailFactoryBean=new JobDetailFactoryBean();
+		jobDetailFactoryBean.setName("myJob");
+		jobDetailFactoryBean.setGroup("myGroup");
+		jobDetailFactoryBean.setJobClass(MyJob.class);
+		jobDetailFactoryBean.setDurability(true);
+		//jobDetailFactoryBean.setApplicationContextJobDataKey("annotationConfigApplicationContext");
+		return jobDetailFactoryBean;
 	}
+	@Bean
+	public CronTriggerFactoryBean getCronTriggerFactoryBean() {
+		CronTriggerFactoryBean crBean=new CronTriggerFactoryBean();
+		crBean.setName("my_cron_tr");
+		crBean.setGroup("myGroup");
+		crBean.setJobDetail(getJobDetailFactoryBean().getObject());
+		crBean.setCronExpression("0/3 * * * * ?");//     
+		return crBean;
+	}
+	@Bean
+	public SchedulerFactoryBean getSchedulerFactoryBean() {
+		SchedulerFactoryBean scBean=new SchedulerFactoryBean();
+		scBean.setJobFactory(adaptableJobFactory);
+		scBean.setDataSource(druidDataSource);
+		CronTrigger [] cronTriggers=new  CronTrigger[] {getCronTriggerFactoryBean().getObject()};
+		scBean.setTriggers(cronTriggers);
+		scBean.setStartupDelay(2);
+		return scBean;
+	}
+	
+
 }
