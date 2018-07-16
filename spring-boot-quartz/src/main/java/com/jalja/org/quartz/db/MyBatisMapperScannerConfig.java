@@ -1,24 +1,24 @@
-package com.jalja.org.quartz.config;
+package com.jalja.org.quartz.db;
 
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
-
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @AutoConfigureAfter(MyBatisConfig.class)
+
 public class MyBatisMapperScannerConfig {
 	
-	@Autowired
-	private Environment env;
+	private String  basePackage="com.jalja.org.quartz.mapper";
+	
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {
       MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
       mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
-      mapperScannerConfigurer.setBasePackage(env.getProperty("mybatis.mapper.basePackage"));
+      mapperScannerConfigurer.setBasePackage(basePackage);
       return mapperScannerConfigurer;
-   } 
+   }
 }

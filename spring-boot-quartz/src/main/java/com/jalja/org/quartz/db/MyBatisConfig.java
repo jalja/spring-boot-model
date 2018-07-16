@@ -1,4 +1,4 @@
-package com.jalja.org.quartz.config;
+package com.jalja.org.quartz.db;
 
 import java.util.Properties;
 
@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -30,21 +31,22 @@ public class MyBatisConfig implements TransactionManagementConfigurer{
 	private static final Logger logger= LoggerFactory.getLogger(MyBatisConfig.class);
 	@Autowired
 	private DruidDataSource druidDataSource;
-	@Autowired
-	private Environment env;
 	
-	@PostConstruct
-    public void init() {
-    	logger.info("MyBatisConfig>>>");
-    }
+	@Value("${mybatis.mapper.aliasesPackage}")
+	private String  aliasesPackage;
+	
+	@Value("${mybatis.mapper.mapperLocations}")
+	private String  mapperLocations;
+	
+	
 	
     @Bean(name = "sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(druidDataSource);
-        bean.setTypeAliasesPackage(env.getProperty("mybatis.mapper.aliasesPackage"));
+        bean.setTypeAliasesPackage(aliasesPackage);
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        bean.setMapperLocations(resolver.getResources(env.getProperty("mybatis.mapper.mapperLocations")));
+        bean.setMapperLocations(resolver.getResources(mapperLocations));
         //分页插件
         PageHelper pageHelper = new PageHelper();
         Properties properties = new Properties();
@@ -61,6 +63,10 @@ public class MyBatisConfig implements TransactionManagementConfigurer{
 	public PlatformTransactionManager annotationDrivenTransactionManager() {
 		  return new DataSourceTransactionManager(druidDataSource);
 	}
-	
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+	   return new PropertySourcesPlaceholderConfigurer();
+	}
+
 	
 }
