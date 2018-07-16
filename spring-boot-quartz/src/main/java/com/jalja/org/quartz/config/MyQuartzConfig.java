@@ -33,7 +33,7 @@ public class MyQuartzConfig {
 		jobDetailFactoryBean.setGroup("myGroup");
 		jobDetailFactoryBean.setJobClass(MyJob.class);
 		jobDetailFactoryBean.setDurability(true);
-		//jobDetailFactoryBean.setApplicationContextJobDataKey("annotationConfigApplicationContext");
+		//jobDetailFactoryBean.setApplicationContextJobDataKey("applicationContext");
 		return jobDetailFactoryBean;
 	}
 	@Bean
