@@ -1,9 +1,12 @@
-package com.jalja.org.quartz.db;
+package com.jalja.org.quartz.config;
+
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 
 @ConfigurationProperties(prefix = "spring.datasource")
-public class DataSourcProperties {
+@PropertySource({"classpath:db.properties"})
+public class DBProperties {
 	private String dbUrl;
     private String username;
     private String password;
@@ -116,5 +119,4 @@ public class DataSourcProperties {
 	public void setLogSlowSql(String logSlowSql) {
 		this.logSlowSql = logSlowSql;
 	}
-    
 }
