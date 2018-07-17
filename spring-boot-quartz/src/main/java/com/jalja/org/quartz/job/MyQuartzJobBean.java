@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class MyQuartzJobBean {
 	private static final Logger logger= LoggerFactory.getLogger(MyQuartzJobBean.class);
 	
-	public void add() {
+	public void addTest() {
 		logger.info("add==>");
 	}
 

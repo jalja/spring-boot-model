@@ -2,7 +2,7 @@
 <configuration>
     <Properties>
         <Property name="fileName">quartz-log.log</Property>
-        <Property name="backupFilePatch">d:/logs/log4j2/</Property>
+        <Property name="backupFilePatch">E:/logs/log4j2/</Property>
       </Properties>
     <!--先定义所有的appender-->
     <appenders>
