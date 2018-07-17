@@ -22,9 +22,9 @@ public class MyService {
 	@Autowired
 	private JaljaUserMapper jaljaUserMapper;
 	
-	public void myTest() {
+	public void myTest(String name) {
 		JaljaUserExample example=new JaljaUserExample();
 		List<JaljaUser> users=jaljaUserMapper.selectByExample(example);
-		logger.info(JSON.toJSONString(users));
+		logger.info(name+":myTest");
     }
 }
