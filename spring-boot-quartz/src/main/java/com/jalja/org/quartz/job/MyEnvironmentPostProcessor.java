@@ -17,7 +17,7 @@ public class MyEnvironmentPostProcessor implements EnvironmentPostProcessor{
 	public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
 		Properties properties=new Properties();
 		try {
-			properties.load(this.getClass().getClassLoader().getResourceAsStream("job.properties"));
+			properties.load(this.getClass().getClassLoader().getResourceAsStream("quartz.properties"));
 			PropertiesPropertySource source =new PropertiesPropertySource("my",properties);
 			environment.getPropertySources().addLast(source);
 		} catch (IOException e) {

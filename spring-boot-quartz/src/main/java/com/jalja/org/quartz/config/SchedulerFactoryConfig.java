@@ -5,18 +5,18 @@ package com.jalja.org.quartz.config;
 
 
 
-import javax.annotation.Resource;
-
 import org.quartz.CronTrigger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.jalja.org.quartz.job.AdaptableJobFactory;
 
-
+@Configuration
 public class SchedulerFactoryConfig {
 	
 	 @Autowired
@@ -25,15 +25,18 @@ public class SchedulerFactoryConfig {
 	 @Autowired
 	 private DruidDataSource druidDataSource;
 	 
-	 @Resource(name="cronTriggerBean")
+	 @Autowired
+	 @Qualifier("cronTriggerBean")
 	 private CronTriggerFactoryBean cronTriggerBean;
 	 
-	 @Resource(name="cronTriggerBean2")
+	 @Autowired
+	 @Qualifier("cronTriggerBean2")
 	 private CronTriggerFactoryBean cronTriggerBean2;
 	
 	@Bean
 	public SchedulerFactoryBean getSchedulerFactoryBean() {
 		SchedulerFactoryBean scBean=new SchedulerFactoryBean();
+		scBean.setConfigLocation(new ClassPathResource("quartz.properties",this.getClass().getClassLoader()));
 		scBean.setJobFactory(adaptableJobFactory);
 		scBean.setDataSource(druidDataSource);
         CronTrigger [] fs=new CronTrigger[] {cronTriggerBean.getObject(),cronTriggerBean2.getObject()};
